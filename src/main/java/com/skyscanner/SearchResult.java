@@ -2,7 +2,7 @@ package com.skyscanner;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SearchResults {
+public class SearchResult {
 
     @JsonProperty
     private String city;
@@ -13,11 +13,11 @@ public class SearchResults {
     @JsonProperty
     private String kind;
 
-    public SearchResults() {
+    public SearchResult() {
 
     }
 
-    public SearchResults(String city, String title, String kind) {
+    public SearchResult(String city, String title, String kind) {
         this.city = city;
         this.title = title;
         this.kind = kind;

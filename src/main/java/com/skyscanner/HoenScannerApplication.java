@@ -6,7 +6,6 @@ import io.dropwizard.core.setup.Bootstrap;
 import io.dropwizard.core.setup.Environment;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,22 +29,24 @@ public class HoenScannerApplication extends Application<HoenScannerConfiguration
     @Override
     public void run(final HoenScannerConfiguration configuration, final Environment environment) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        List<SearchResults> carResults = Arrays.asList(
+        List<SearchResult> carResults = Arrays.asList(
                 mapper.readValue(
-                        getClass().getClassLoader().getResource("rental-cars.json"),
-                        SearchResults[].class
+                        getClass().getClassLoader().getResource("rental_cars.json"),
+                        SearchResult[].class
                 )
         );
 
-        List<SearchResults> hotelResults = Arrays.asList(
+        List<SearchResult> hotelResults = Arrays.asList(
                 mapper.readValue(
                         getClass().getClassLoader().getResource("hotels.json"),
-                        SearchResults[].class
+                        SearchResult[].class
                 )
         );
-        List<SearchResults> searchResults = new ArrayList<>();
+        List<SearchResult> searchResults = new ArrayList<>();
         searchResults.addAll(carResults);
         searchResults.addAll(hotelResults);
+        final SearchResource resource = new SearchResource(searchResults);
+        environment.jersey().register(resource);
     }
 
 }
